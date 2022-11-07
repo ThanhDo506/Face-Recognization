@@ -14,7 +14,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 
 import faceReg
-model = faceReg.Recognition('FaceClassify_Final.h5')
+model = faceReg.Recognition('FaceClassify_FINAL.h5')
  
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
