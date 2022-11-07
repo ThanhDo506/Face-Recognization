@@ -1,6 +1,5 @@
-from flask import Flask, json, request, jsonify
+from flask import Flask, request, jsonify
 import os
-import urllib.request
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -15,7 +14,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 
 import faceReg
-model = faceReg.Recognition('../FaceClassify_REMASTER_2.h5')
+model = faceReg.Recognition('FaceClassify_Final.h5')
  
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -47,7 +46,10 @@ def upload_file():
  
     if success and errors:
         errors['message'] = 'File(s) successfully uploaded'
-        resp = jsonify(errors)
+        res = []
+        for i in fileSavedName:
+            res.append(model.predict(i))
+        resp = jsonify({'result': res})
         resp.status_code = 500
     if success:
         res = model.predict(fileSavedName[0])
